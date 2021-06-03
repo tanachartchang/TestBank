@@ -83,6 +83,14 @@ namespace Repository.Implementation
             return query.List<BankAccount>().FirstOrDefault();
         }
 
+        public List<BankAccount> GetAllAccount()
+        {
+            var query = from u in _session.QueryOver<BankAccount>()
+                        where u.accountNo != null
+                        select u;
+            return query.List<BankAccount>().ToList();
+        }
+
         public List<BankAccount> GetAccountByCustID(String custID)
         {
             var query = from u in _session.QueryOver<BankAccount>()

@@ -12,6 +12,7 @@ namespace Repository.Interface
         void DeleteAccountByID(String accountNo);
         void DeleteAccountByCustID(String custID);
         BankAccount GetAccountByID(String accountNo);
+        List<BankAccount> GetAllAccount();
         List<BankAccount> GetAccountByCustID(String custID);
         String GenerateIBAN();
     }

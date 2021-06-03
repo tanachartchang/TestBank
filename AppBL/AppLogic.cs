@@ -47,7 +47,7 @@ namespace AppBL
         }
         public void DepositeAccount(String accountNo, Double value)
         {
-            if (_bankConfig == null) _bankConfig = _configRepo.GetConfig();
+            InitConfig();
 
             Double fee_amount = value * (_bankConfig.fee_deposite.GetValueOrDefault() / 100);
 
@@ -63,9 +63,27 @@ namespace AppBL
             _transactionRepo.CreateTransaction(trans);
             _accountRepo.Deposite(accountNo, value - fee_amount);
         }
+        public void WithDrawAccount(String accountNo, Double value)
+        {
+            InitConfig();
+
+            Double fee_amount = value * (_bankConfig.fee_withdraw.GetValueOrDefault() / 100);
+
+            BankTransaction trans = new BankTransaction()
+            {
+                trans_type = "W",
+                to_acc = accountNo,
+                value = value,
+                fee_rate = _bankConfig.fee_deposite.GetValueOrDefault(),
+                fee_amount = fee_amount,
+                total = value - fee_amount
+            };
+            _transactionRepo.CreateTransaction(trans);
+            _accountRepo.Withdraw(accountNo, value);
+        }
         public void TransferAccount(String fromAcc, String toAcc, Double value)
         {
-            if (_bankConfig == null) _bankConfig = _configRepo.GetConfig();
+            InitConfig();
 
             Double fee_amount = value * (_bankConfig.fee_transfer.GetValueOrDefault() / 100);
 
@@ -95,6 +113,10 @@ namespace AppBL
         {
             return _accountRepo.GetAccountByID(accountNo);
         }
+        public List<BankAccount> GetAllAccount()
+        {
+            return _accountRepo.GetAllAccount();
+        }
         public List<BankAccount> GetAccountByCustID(String custID)
         {
             return _accountRepo.GetAccountByCustID(custID);
@@ -102,6 +124,11 @@ namespace AppBL
         public String GenerateIBAN()
         {
             return _accountRepo.GenerateIBAN();
+        }
+        public BankConfig InitConfig()
+        {
+            if (_bankConfig == null) _bankConfig = _configRepo.GetConfig();
+            return _bankConfig;
         }
     }
 }
