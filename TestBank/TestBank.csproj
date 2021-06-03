@@ -14,7 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppBL\AppBL.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App_Data\MySQL.xml.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

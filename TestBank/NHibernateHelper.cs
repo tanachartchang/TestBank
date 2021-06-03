@@ -75,7 +75,10 @@ namespace TestBank
             {
 
                 Configuration = Fluently.Configure(new Configuration().Configure(DatabaseFile));
-                Configuration.Mappings(map => map.FluentMappings.AddFromAssemblyOf<BankAccountMap>());
+                Configuration.Mappings(map => map.FluentMappings.AddFromAssemblyOf<BankAccountMap>()
+                                                                .AddFromAssemblyOf<CustomerMap>()
+                                                                .AddFromAssemblyOf<BankTransactionMap>()
+                                                                .AddFromAssemblyOf<ConfigMap>());
                 Configuration.ExposeConfiguration(x =>
                 {
                     x.SetInterceptor(new Inceptor());

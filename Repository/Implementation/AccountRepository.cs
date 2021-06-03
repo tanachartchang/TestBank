@@ -39,6 +39,28 @@ namespace Repository.Implementation
             return accountInfo;
         }
 
+        public void Deposite(String accountNo, Double value)
+        {
+            var q1 = @"UPDATE bank_account SET balance = balance + :val1
+                        WHERE account_no = :acc";
+
+            var query = _session.CreateSQLQuery(q1)
+                .SetParameter("val1", value )
+                .SetParameter("acc", accountNo);
+            query.ExecuteUpdate();
+        }
+
+        public void Withdraw(String accountNo, Double value)
+        {
+            var q1 = @"UPDATE bank_account SET balance = balance - :val1
+                        WHERE account_no = :acc";
+
+            var query = _session.CreateSQLQuery(q1)
+                .SetParameter("val1", value)
+                .SetParameter("acc", accountNo);
+            query.ExecuteUpdate();
+        }
+
         public void DeleteAccountByID(String accountNo)
         {
             _session.Query<BankAccount>()

@@ -7,6 +7,8 @@ namespace Repository.Interface
     public interface IAccountRepository
     {
         BankAccount CreateAccount(Customer custInfo);
+        void Deposite(String accountNo, Double value);
+        void Withdraw(String accountNo, Double value);
         void DeleteAccountByID(String accountNo);
         void DeleteAccountByCustID(String custID);
         BankAccount GetAccountByID(String accountNo);

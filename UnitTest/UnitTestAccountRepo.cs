@@ -28,7 +28,7 @@ namespace UnitTest
 
         private AppLogic GetAppLogic(ISession session)
         {
-            return new AppLogic(new CustomerRepository(session), new AccountRepository(session));
+            return new AppLogic(new CustomerRepository(session), new AccountRepository(session), new TransactionRepository(session), new ConfigRepository(session));
         }
 
         [TestMethod]
@@ -68,43 +68,130 @@ namespace UnitTest
             Assert.IsTrue(actual.Count > 0);
         }
 
-        //[TestMethod]
-        //public void TestDeleteAccountByCustID()
-        //{
-        //    initDB();
-        //    List<BankAccount> actual = null;
-        //    using (var session = NHibernateHelper.OpenSession())
-        //    using (var transaction = session.BeginTransaction())
-        //    {
-        //        try
-        //        {
-        //            GetAppLogic(session).DeleteAccountByCustID(_custInfo.custID);
-        //            transaction.Commit();
-        //        }
-        //        catch
-        //        {
-        //            transaction.Rollback();
-        //        }
-        //        finally
-        //        {
-        //            session.Close();
-        //        }
-        //    }
+        [TestMethod]
+        public void TestDepositeAccount()
+        {
+            initDB();
+            BankAccount expected = new BankAccount()
+            {
+                accountNo = "NL17INGB1958634190"
+            };
+            BankAccount actual = null;
 
-        //    using (var session = NHibernateHelper.OpenSession())
-        //    {
-        //        try
-        //        {
-        //            actual = GetAppLogic(session).GetAccountByCustID(_custInfo.custID);
-        //        }
-        //        finally
-        //        {
-        //            session.Close();
-        //        }
-        //    }
+            using (var session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                try
+                {
+                    GetAppLogic(session).DepositeAccount(expected.accountNo, 1000);
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                }
+                finally
+                {
+                    session.Close();
+                }
+            }
 
-        //    Assert.IsTrue(actual.Count == 0);
-        //}
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    actual = GetAppLogic(session).GetAccountByID(expected.accountNo);
+                }
+                finally
+                {
+                    session.Close();
+                }
+            }
+            Assert.IsTrue(actual.balance > 0);
+        }
+
+        [TestMethod]
+        public void TestTransferAccount()
+        {
+            initDB();
+            BankAccount expected = new BankAccount()
+            {
+                accountNo = "NL17INGB1958634190"
+            };
+            BankAccount actual = new BankAccount()
+            {
+                accountNo = "NL33INGB6111062476"
+            };
+
+            using (var session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                try
+                {
+                    GetAppLogic(session).TransferAccount(expected.accountNo, actual.accountNo, 100);
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                }
+                finally
+                {
+                    session.Close();
+                }
+            }
+
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    actual = GetAppLogic(session).GetAccountByID(actual.accountNo);
+                }
+                finally
+                {
+                    session.Close();
+                }
+            }
+            Assert.IsTrue(actual.balance > 0);
+        }
+
+        [TestMethod]
+        public void TestDeleteAccountByCustID()
+        {
+            initDB();
+            List<BankAccount> actual = null;
+            using (var session = NHibernateHelper.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                try
+                {
+                    GetAppLogic(session).DeleteAccountByCustID(_custInfo.custID);
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                }
+                finally
+                {
+                    session.Close();
+                }
+            }
+
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    actual = GetAppLogic(session).GetAccountByCustID(_custInfo.custID);
+                }
+                finally
+                {
+                    session.Close();
+                }
+            }
+
+            Assert.IsTrue(actual.Count == 0);
+        }
 
         [TestMethod]
         public void TestGenerateIBAN()

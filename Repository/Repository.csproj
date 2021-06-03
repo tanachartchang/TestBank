@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Resource Include="LocalDLL\chromedriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentNHibernate" Version="3.1.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.33" />
     <PackageReference Include="Selenium.Firefox.WebDriver" Version="0.27.0" />
@@ -18,6 +24,12 @@
 
   <ItemGroup>
     <Folder Include="Dto\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="chromedriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

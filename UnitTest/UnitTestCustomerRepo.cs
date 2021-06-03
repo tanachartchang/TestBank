@@ -25,7 +25,7 @@ namespace UnitTest
 
         private AppLogic GetAppLogic(ISession session)
         {
-            return new AppLogic(new CustomerRepository(session), new AccountRepository(session));
+            return new AppLogic(new CustomerRepository(session), new AccountRepository(session), new TransactionRepository(session), new ConfigRepository(session));
         }
 
         [TestMethod]

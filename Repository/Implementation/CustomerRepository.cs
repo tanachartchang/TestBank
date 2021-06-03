@@ -23,6 +23,13 @@ namespace Repository.Implementation
                         select u;
             return query.List<Customer>().FirstOrDefault();
         }
+        public List<Customer> GetAllCust()
+        {
+            var query = from u in _session.QueryOver<Customer>()
+                        where u.custID != null
+                        select u;
+            return query.List<Customer>().ToList();
+        }
 
         public Customer CreateCust(Customer custInfo)
         {

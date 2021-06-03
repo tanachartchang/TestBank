@@ -29,26 +29,26 @@ namespace TestBank
         /// </summary>
         private void InitializeComponent()
         {
-            this.BtnCreateAccount = new System.Windows.Forms.Button();
+            this.BtnOpenAccount = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // BtnCreateAccount
+            // BtnOpenAccount
             // 
-            this.BtnCreateAccount.Location = new System.Drawing.Point(12, 12);
-            this.BtnCreateAccount.Name = "BtnCreateAccount";
-            this.BtnCreateAccount.Size = new System.Drawing.Size(90, 44);
-            this.BtnCreateAccount.TabIndex = 0;
-            this.BtnCreateAccount.Text = "Create accounts";
-            this.BtnCreateAccount.UseVisualStyleBackColor = true;
-            this.BtnCreateAccount.Click += new System.EventHandler(this.BtnCreateAccount_Click);
+            this.BtnOpenAccount.Location = new System.Drawing.Point(12, 12);
+            this.BtnOpenAccount.Name = "BtnOpenAccount";
+            this.BtnOpenAccount.Size = new System.Drawing.Size(90, 44);
+            this.BtnOpenAccount.TabIndex = 0;
+            this.BtnOpenAccount.Text = "Account";
+            this.BtnOpenAccount.UseVisualStyleBackColor = true;
+            this.BtnOpenAccount.Click += new System.EventHandler(this.BtnCreateAccount_Click);
             // 
-            // Form1
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.BtnCreateAccount);
-            this.Name = "Form1";
+            this.Controls.Add(this.BtnOpenAccount);
+            this.Name = "FrmMain";
             this.Text = "Form1";
             this.ResumeLayout(false);
 
@@ -56,7 +56,7 @@ namespace TestBank
 
         #endregion
 
-        private System.Windows.Forms.Button BtnCreateAccount;
+        private System.Windows.Forms.Button BtnOpenAccount;
     }
 }
 

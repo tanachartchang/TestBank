@@ -14,7 +14,7 @@ namespace TestBank
         [STAThread]
         static void Main()
         {
-            NHibernateHelper.DatabaseFile = "./App_Data/DataSet.xml.cfg";
+            NHibernateHelper.DatabaseFile = "./App_Data/MySQL.xml.cfg";
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
